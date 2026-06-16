@@ -1,24 +1,32 @@
+using PlayFab.ClientModels;
 using UnityEngine;
 
-public class Singleton : MonoBehaviour
+public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 {
-    private static Singleton instance;
-    public static Singleton Instance {  get { return instance; } }
+    private static T instance;
+    public static T Instance 
+    {
+        get 
+        { 
+            if (instance == null)
+            {
+                instance = (T)FindAnyObjectByType(typeof(T));
+
+                if(instance == null )
+                {
+                    GameObject clone = new GameObject(typeof(T).Name);
+
+                    instance = (T)clone.AddComponent<T>();
+                }
+            }
+            return instance;
+        } 
+    }
     public void Awake()
     {
-        if (instance == null)
+        if (instance != null)
         {
-            instance = this;
-            
-            DontDestroyOnLoad(gameObject);
+            Destroy(gameObject);            
         }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
-    public void Call()
-    {
-        Debug.Log("Call");
     }
 }
