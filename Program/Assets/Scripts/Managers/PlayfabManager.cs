@@ -2,9 +2,8 @@ using UnityEngine;
 using Photon.Pun;
 using PlayFab;
 using PlayFab.ClientModels;
-using TMPro;
 using System.Collections;
-using Unity.VisualScripting;
+using TMPro;
 
 public class PlayfabManager : MonoBehaviourPunCallbacks
 {
@@ -15,14 +14,17 @@ public class PlayfabManager : MonoBehaviourPunCallbacks
 
     public void Request()
     {
+        PlayFabSettings.staticSettings.TitleId = "8AED9";
+
         var request = new LoginWithEmailAddressRequest 
-        { 
-            Email = addressInputField.text,
+        {
+            Email = addressInputField.text, 
             Password = passwordInputField.text 
         };
 
         PlayFabClientAPI.LoginWithEmailAddress(request, Success, Failed);
-    }   
+    }
+
     public void Success(LoginResult loginResult)
     {
         PlayFabClientAPI.GetAccountInfo(new GetAccountInfoRequest(), Success, Failed);
@@ -33,18 +35,27 @@ public class PlayfabManager : MonoBehaviourPunCallbacks
 
         PhotonNetwork.ConnectUsingSettings();
     }
+
+    public void Open()
+    {
+        PanelManager.Instance.Open(Panel.Subscribe);
+    }
+
     public override void OnConnectedToMaster()
     {
         PhotonNetwork.JoinLobby();
     }
+
     public void Success(GetAccountInfoResult getAccountInfoResult)
     {
         PhotonNetwork.LocalPlayer.NickName = getAccountInfoResult.AccountInfo?.Username;
     }
+
     public void Failed(PlayFabError playFabError)
     {
-        Debug.Log(playFabError.GenerateErrorReport());
+        PanelManager.Instance.Open(Panel.Error, playFabError.GenerateErrorReport());
     }
+
     public override void OnJoinedLobby()
     {
         PhotonNetwork.LoadLevel("Lobby");

@@ -3,10 +3,10 @@ using UnityEngine;
 
 public class ErrorPanel : MonoBehaviour
 {
-    [SerializeField] TextMeshProUGUI TextMeshProUGUI;
+    [SerializeField] TextMeshProUGUI textMeshProUGUI;
 
     public void SetMessage(string message)
     {
-        TextMeshProUGUI.text = message;
+        textMeshProUGUI.text = message;
     }
 }

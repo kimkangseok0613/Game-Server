@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
+public class Singleton<T> : MonoBehaviour where T : MonoBehaviour 
 {
     private static T instance;
 
-    public static T Instance
+    public static T Instance 
     {
         get
         {
@@ -12,7 +12,7 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
             {
                 instance = (T)FindAnyObjectByType(typeof(T));
 
-                if (instance == null)
+                if(instance == null)
                 {
                     GameObject clone = new GameObject(typeof(T).Name);
 
@@ -30,5 +30,7 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        DontDestroyOnLoad(gameObject);
     }
 }
