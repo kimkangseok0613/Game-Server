@@ -2,6 +2,7 @@ using UnityEngine;
 using Photon.Pun;
 using TMPro;
 using Photon.Realtime;
+using UnityEngine.UI;
 
 public class RoomStatus : MonoBehaviourPunCallbacks
 {
@@ -10,6 +11,13 @@ public class RoomStatus : MonoBehaviourPunCallbacks
     [SerializeField] TextMeshProUGUI roomNameText;
     [SerializeField] TextMeshProUGUI roomIndexText;
     [SerializeField] TextMeshProUGUI roomPersonalText;
+
+    [SerializeField] Button button;
+
+    private void Start()
+    {
+        button.onClick.AddListener(() => PhotonNetwork.JoinRoom(data.name));
+    }
 
     public void Refresh(RoomInfo roomInfo,int index)
     {

@@ -140,6 +140,7 @@ MonoBehaviour:
   roomNameText: {fileID: 150406433472127821}
   roomIndexText: {fileID: 3715120472626028638}
   roomPersonalText: {fileID: 7890347192839103181}
+  button: {fileID: 3739153376940528619}
 --- !u!1 &3682726267028533703
 GameObject:
   m_ObjectHideFlags: 0
