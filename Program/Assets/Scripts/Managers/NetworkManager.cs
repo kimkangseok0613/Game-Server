@@ -1,15 +1,12 @@
 using UnityEngine;
 using Photon.Pun;
 using System;
+using NUnit.Framework;
+using System.Collections.Generic;
 
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
-    [SerializeField] Transform createPosition;
-
-    private static Vector3 Vector3(double v1, double v2, double v3)
-    {
-        throw new NotImplementedException();
-    }
+    [SerializeField] List<Transform> transforms = new List<Transform>();
 
     private void Start()
     {
@@ -17,6 +14,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     }
     public void Create()
     {
-        PhotonNetwork.Instantiate("Character", createPosition.position, Quaternion.identity);
+        int index = PhotonNetwork.CurrentRoom.PlayerCount - 1;
+
+        PhotonNetwork.Instantiate("Character", transforms[index].position, Quaternion.identity);
     }
 }
