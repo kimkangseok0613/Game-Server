@@ -3,8 +3,15 @@ using Photon.Pun;
 
 public class Character : MonoBehaviourPun
 {
-    Vector3 direction = Vector3.zero;
-    public float moveSpeed = 5f;
+    [SerializeField] Vector3 direction;
+    [SerializeField] float Speed;
+    [SerializeField] Rigidbody Rigidbody;
+    [SerializeField] Rotation rotation;
+
+    private void Awake()
+    {
+        Rigidbody = GetComponent<Rigidbody>();
+    }
 
     private void Start()
     {
@@ -13,49 +20,34 @@ public class Character : MonoBehaviourPun
 
     private void Update()
     {
-        Control();
+        if(photonView.IsMine)
+        {
+            Control();
+        }
     }
 
     private void FixedUpdate()
     {
-        Move();
+        if (photonView.IsMine)
+        { 
+            Move();
+
+            rotation.RotateY(Rigidbody);
+        }
     }
 
     private void Control()
     {
-        direction = Vector3.zero;
+        direction.x = Input.GetAxisRaw("Horizontal");
+        direction.z = Input.GetAxisRaw("Vertical");
+        direction.y = Input.GetAxisRaw("Jump");
 
-        if (Input.GetKey(KeyCode.W))
-        {
-            direction.z += 1;
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            direction.z -= 1;
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            direction.x += 1;
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            direction.x -= 1;
-        }
-
-        if (direction.magnitude > 1f)
-        {
-            direction.Normalize();
-        }
+        direction.Normalize();        
     }
 
     private void Move()
     {
-        if (!photonView.IsMine) return;
-
-        Rigidbody rb = GetComponent<Rigidbody>();
-
-        Vector3 movement = direction * moveSpeed * Time.fixedDeltaTime;
-        rb.MovePosition(rb.position + movement);
+        Rigidbody.MovePosition(Rigidbody.position + Rigidbody.transform.TransformDirection(direction) * Speed * Time.fixedDeltaTime);
     }
 
     private void DisableCamera()
@@ -67,11 +59,10 @@ public class Character : MonoBehaviourPun
         else
         {
             Camera eyes = transform.GetComponentInChildren<Camera>();
-            if (eyes != null)
-            {
-                eyes.GetComponent<AudioListener>().enabled = false;
-                eyes.gameObject.SetActive(false);
-            }
+
+            eyes.GetComponent<AudioListener>().gameObject.SetActive(false);
+
+            eyes.gameObject.SetActive(false);
         }
     }
 }

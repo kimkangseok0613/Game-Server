@@ -233,7 +233,8 @@ GameObject:
   - component: {fileID: 2896152639136396630}
   - component: {fileID: 24388360895546176}
   - component: {fileID: 6418506272979334345}
-  - component: {fileID: 7733989675474521521}
+  - component: {fileID: 4619625516661266505}
+  - component: {fileID: 6763536875715879174}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -251,7 +252,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.06, y: -0.95, z: -1.19}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2925805457821181374}
@@ -299,7 +300,9 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 4619625516661266505}
+  - {fileID: 6763536875715879174}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -315,7 +318,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90a1352fc430644429fa448c78c0c0fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Character
-  moveSpeed: 5
+  direction: {x: 0, y: 0, z: 0}
+  Speed: 5
+  Rigidbody: {fileID: 0}
+  rotation: {fileID: 0}
 --- !u!54 &24388360895546176
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -341,7 +347,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!136 &6418506272979334345
 CapsuleCollider:
@@ -366,7 +372,7 @@ CapsuleCollider:
   m_Height: 2.5
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &7733989675474521521
+--- !u!114 &4619625516661266505
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -375,10 +381,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 3308953768985169139}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90a1352fc430644429fa448c78c0c0fd, type: 3}
+  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Character
-  moveSpeed: 5
+  m_EditorClassIdentifier: PhotonUnityNetworking::Photon.Pun.PhotonRigidbodyView
+  m_SynchronizeVelocity: 1
+  m_SynchronizeAngularVelocity: 0
+  m_TeleportEnabled: 0
+  m_TeleportIfDistanceGreaterThan: 3
+--- !u!114 &6763536875715879174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3308953768985169139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: PhotonUnityNetworking::Photon.Pun.PhotonTransformView
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &3600471467012517975
 GameObject:
   m_ObjectHideFlags: 0
@@ -423,6 +448,7 @@ GameObject:
   - component: {fileID: 7817430510566782934}
   - component: {fileID: 189206683188137670}
   - component: {fileID: 5821971145963362977}
+  - component: {fileID: 946145982588708880}
   m_Layer: 0
   m_Name: Eyes
   m_TagString: Untagged
@@ -548,6 +574,22 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!114 &946145982588708880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3793546492087443480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffd771daa8e51894fb3149256574bca9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Rotation
+  axis: 0
+  speed: 0
+  mouseX: 0
+  mouseY: 0
 --- !u!1 &4027130361117948122
 GameObject:
   m_ObjectHideFlags: 0
