@@ -4,39 +4,60 @@ using Photon.Pun;
 public class Character : MonoBehaviourPun
 {
     Vector3 direction = Vector3.zero;
+    public float moveSpeed = 5f;
 
     private void Start()
     {
         DisableCamera();
     }
+
+    private void Update()
+    {
+        Control();
+    }
+
     private void FixedUpdate()
     {
         Move();
     }
+
     private void Control()
     {
-        if(Input.GetKeyDown(KeyCode.W))
+        direction = Vector3.zero;
+
+        if (Input.GetKey(KeyCode.W))
         {
-            direction.x++;
+            direction.z += 1;
         }
-        if (Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKey(KeyCode.S))
         {
-            direction.x--;
+            direction.z -= 1;
         }
-        if (Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKey(KeyCode.D))
         {
-            direction.z++;
+            direction.x += 1;
         }
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKey(KeyCode.A))
         {
-            direction.z--;
+            direction.x -= 1;
+        }
+
+        if (direction.magnitude > 1f)
+        {
+            direction.Normalize();
         }
     }
+
     private void Move()
     {
+        if (!photonView.IsMine) return;
+
         Rigidbody rb = GetComponent<Rigidbody>();
-        rb.MovePosition(direction);
+
+        Vector3 movement = direction * moveSpeed * Time.fixedDeltaTime;
+        rb.MovePosition(rb.position + movement);
     }
+
     private void DisableCamera()
     {
         if (photonView.IsMine)
@@ -46,10 +67,11 @@ public class Character : MonoBehaviourPun
         else
         {
             Camera eyes = transform.GetComponentInChildren<Camera>();
-
-            eyes.GetComponent<AudioListener>().gameObject.SetActive(false);
-
-            eyes.gameObject.SetActive(false);
+            if (eyes != null)
+            {
+                eyes.GetComponent<AudioListener>().enabled = false;
+                eyes.gameObject.SetActive(false);
+            }
         }
     }
 }
