@@ -235,6 +235,7 @@ GameObject:
   - component: {fileID: 6418506272979334345}
   - component: {fileID: 4619625516661266505}
   - component: {fileID: 6763536875715879174}
+  - component: {fileID: 5670007287062738752}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -404,6 +405,20 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
+--- !u!114 &5670007287062738752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3308953768985169139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffd771daa8e51894fb3149256574bca9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Rotation
+  axis: 0
+  speed: 400
 --- !u!1 &3600471467012517975
 GameObject:
   m_ObjectHideFlags: 0
@@ -588,8 +603,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Rotation
   axis: 0
   speed: 0
-  mouseX: 0
-  mouseY: 0
 --- !u!1 &4027130361117948122
 GameObject:
   m_ObjectHideFlags: 0

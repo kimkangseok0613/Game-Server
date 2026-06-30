@@ -11,6 +11,7 @@ public class Character : MonoBehaviourPun
     private void Awake()
     {
         Rigidbody = GetComponent<Rigidbody>();
+        rotation = GetComponent<Rotation>();
     }
 
     private void Start()
