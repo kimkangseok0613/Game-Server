@@ -1,8 +1,7 @@
 using UnityEngine;
 using Photon.Pun;
-using System;
-using NUnit.Framework;
 using System.Collections.Generic;
+
 
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
@@ -12,10 +11,12 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         Create();
     }
+
     public void Create()
     {
         int index = PhotonNetwork.CurrentRoom.PlayerCount - 1;
 
         PhotonNetwork.Instantiate("Character", transforms[index].position, Quaternion.identity);
     }
+
 }

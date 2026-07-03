@@ -7,16 +7,23 @@ using UnityEngine.UI;
 
 public class RoomPanel : MonoBehaviourPunCallbacks
 {
-    [SerializeField] int personal = 2;
-    [SerializeField] Toggle[ ] toggles;
-    [SerializeField] TMP_InputField roomNameInputField;
+    [SerializeField] int personnel = 0;
+    [SerializeField] Toggle [ ] toggles;
     [SerializeField] Button createRoomButton;
-    
+    [SerializeField] TMP_InputField roomNameInputField;
+
+    private void Start()
+    {
+        Select();
+
+        OnRoomNameChanged();
+    }
+
     public void CreateRoom()
     {
         RoomOptions roomOptions = new RoomOptions();
 
-        roomOptions.MaxPlayers = personal;
+        roomOptions.MaxPlayers = personnel;
 
         roomOptions.IsOpen = true;
 
@@ -26,24 +33,23 @@ public class RoomPanel : MonoBehaviourPunCallbacks
 
         gameObject.SetActive(false);
     }
-    private void Start()
-    {
-        Select();
-        OnRoomNameChanged();
-    }
-    public void Select()
-    {
-        for (int i = 0; i < toggles.Length; i++)
-        {
-            if (toggles[i].isOn)
-            { 
-                personal = i + 2; 
-                break; 
-            }
-        }
-    }
+
     public void OnRoomNameChanged()
     {
         createRoomButton.interactable = string.IsNullOrWhiteSpace(roomNameInputField.text) == false;
     }
+
+    public void Select()
+    {
+        for(int i = 0; i < toggles.Length; i++)
+        {
+            if (toggles[i].isOn)
+            {
+                personnel = i + 2;
+
+                break;
+            }
+        }
+    }
+
 }

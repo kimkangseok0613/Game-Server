@@ -3,16 +3,17 @@ using Photon.Pun;
 
 public class Character : MonoBehaviourPun
 {
+    [SerializeField] float speed;
     [SerializeField] Vector3 direction;
-    [SerializeField] float Speed;
-    [SerializeField] Rigidbody Rigidbody;
     [SerializeField] Rotation rotation;
     [SerializeField] Animator animator;
+    [SerializeField] Rigidbody rigidBody;
+
     private void Awake()
     {
-        Rigidbody = GetComponent<Rigidbody>();
-        rotation = GetComponent<Rotation>();
         animator = GetComponent<Animator>();
+        rotation = GetComponent<Rotation>();
+        rigidBody = GetComponent<Rigidbody>();
     }
 
     private void Start()
@@ -22,43 +23,46 @@ public class Character : MonoBehaviourPun
 
     private void Update()
     {
-        if(photonView.IsMine)
+        if (photonView.IsMine)
         {
-            Control();
+           Control();
+
+           Animate();
         }
     }
 
     private void FixedUpdate()
     {
         if (photonView.IsMine)
-        { 
+        {
             Move();
 
-            rotation.RotateY(Rigidbody);
+            rotation.RotateY(rigidBody);
         }
     }
 
-    private void Control()
+    void Control()
     {
         direction.x = Input.GetAxisRaw("Horizontal");
         direction.z = Input.GetAxisRaw("Vertical");
 
-        if (direction.x > 0 || direction.z>0)
-        {
-            animator.SetInteger("X", (int)direction.x);
-            animator.SetInteger("Y", (int)direction.z);
-        }
-        direction.Normalize();        
+        direction.Normalize();
     }
 
-    private void Move()
+    void Animate()
     {
-        Rigidbody.MovePosition(Rigidbody.position + Rigidbody.transform.TransformDirection(direction) * Speed * Time.fixedDeltaTime);
+        animator.SetInteger("X", Mathf.Abs((int)direction.x));
+        animator.SetInteger("Y", Mathf.Abs((int)direction.z));
+    }
+
+    void Move()
+    {
+        rigidBody.MovePosition(rigidBody.position + rigidBody.transform.TransformDirection(direction) * speed * Time.fixedDeltaTime);
     }
 
     private void DisableCamera()
     {
-        if (photonView.IsMine)
+        if(photonView.IsMine)
         {
             Camera.main.gameObject.SetActive(false);
         }
@@ -71,4 +75,5 @@ public class Character : MonoBehaviourPun
             eyes.gameObject.SetActive(false);
         }
     }
+
 }

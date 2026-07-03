@@ -6,7 +6,7 @@ using UnityEngine;
 public class MasterManager : MonoBehaviourPunCallbacks
 {
     [SerializeField] Transform createTransform;
-    [SerializeField] float time = 5f;
+
     private IEnumerator Start()
     {
         if (PhotonNetwork.IsMasterClient)
@@ -17,7 +17,7 @@ public class MasterManager : MonoBehaviourPunCallbacks
 
                 clone.transform.position = createTransform.position;
 
-                yield return new WaitForSeconds(time);
+                yield return new WaitForSeconds(5.0f);
             }
         }
     }

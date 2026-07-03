@@ -10,28 +10,26 @@ public class RoomStatus : MonoBehaviourPunCallbacks
 
     [SerializeField] TextMeshProUGUI roomNameText;
     [SerializeField] TextMeshProUGUI roomIndexText;
-    [SerializeField] TextMeshProUGUI roomPersonalText;
+    [SerializeField] TextMeshProUGUI roomPersonnelText;
 
     [SerializeField] Button button;
 
     private void Start()
     {
-        button.onClick.AddListener(() => PhotonNetwork.JoinRoom(data.name));
+        button.onClick.AddListener(() => PhotonNetwork.JoinRoom(data.Name));
     }
 
-    public void Refresh(RoomInfo roomInfo,int index)
+    public void Refresh(RoomInfo roomInfo, int index)
     {
         data.Name = roomInfo.Name;
-        data.index = index + 1;
+        data.Index = index + 1;
         data.PlayerCount = roomInfo.PlayerCount;
         data.MaxPlayers = roomInfo.MaxPlayers;
 
         roomNameText.text = roomInfo.Name;
 
-        // data.index.ToString(); 
-        roomIndexText.text = data.index.ToString();
+        roomIndexText.text = data.Index.ToString();
 
-        // roomPersonalText.text = "(" + roomInfo.PlayerCount + " / " + roomInfo.MaxPlayers + ")";
-        roomPersonalText.text = $"({roomInfo.PlayerCount}/{data.MaxPlayers})"; 
+        roomPersonnelText.text = $"({roomInfo.PlayerCount} / {data.MaxPlayers})";
     }
 }

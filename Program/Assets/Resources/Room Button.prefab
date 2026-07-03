@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6497209518573517193}
   - component: {fileID: 1429135559712599477}
   - component: {fileID: 3739153376940528619}
-  - component: {fileID: 4154377876829128619}
+  - component: {fileID: 2683899422687454525}
   m_Layer: 5
   m_Name: Room Button
   m_TagString: Untagged
@@ -32,8 +32,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 991506117478212247}
   - {fileID: 4740969763607802774}
+  - {fileID: 991506117478212247}
   - {fileID: 1717037438320409999}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -124,7 +124,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &4154377876829128619
+--- !u!114 &2683899422687454525
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -133,13 +133,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 2269259046633627312}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d43d6b3110d2ff940b5fe93068a67b8d, type: 3}
+  m_Script: {fileID: 11500000, guid: 9c2892d60aa05bc48abff285295fdd00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomStatus
-  data: {fileID: 0}
   roomNameText: {fileID: 150406433472127821}
   roomIndexText: {fileID: 3715120472626028638}
-  roomPersonalText: {fileID: 7890347192839103181}
+  roomPersonnelText: {fileID: 7890347192839103181}
   button: {fileID: 3739153376940528619}
 --- !u!1 &3682726267028533703
 GameObject:
@@ -153,7 +152,7 @@ GameObject:
   - component: {fileID: 2285449511746761792}
   - component: {fileID: 7890347192839103181}
   m_Layer: 5
-  m_Name: Room Personal
+  m_Name: Room Personnel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
