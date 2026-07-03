@@ -25,9 +25,11 @@ public class Character : MonoBehaviourPun
     {
         if (photonView.IsMine)
         {
-           Control();
+            Control();
 
-           Animate();
+            Animate();
+
+            Pause();
         }
     }
 
@@ -40,7 +42,15 @@ public class Character : MonoBehaviourPun
             rotation.RotateY(rigidBody);
         }
     }
+    void Pause()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            MouseManager.Instance.SetMouse(true);
 
+            PanelManager.Instance.Open(Panel.Pause);
+        }
+    }
     void Control()
     {
         direction.x = Input.GetAxisRaw("Horizontal");

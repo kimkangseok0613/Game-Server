@@ -16,15 +16,43 @@ public class DialogManager : MonoBehaviourPunCallbacks
         {
             inputField.ActivateInputField();
 
+            if(inputField.text.Length <= 0 )
+            {
+                return;
+            }
             string message = $"<color=green>{PhotonNetwork.LocalPlayer.NickName} </color>" + " : " + inputField.text;
 
-            Text talk = Instantiate(Resources.Load<Text>("Message"), parentTransform);
-
-            talk.text = message;
+            // RPC Target.All : 현재 룸에 있는 모든 클라이언트에게 Talk() 함수를
+            // 실행하라는 명령을 전달합니다.
+            photonView.RPC("Send", RpcTarget.All, message);
 
             inputField.text = "";
 
             inputField.ActivateInputField();
         }
+    }
+
+    [PunRPC]
+    public void Send(string message)
+    {
+        Text talk = Instantiate(Resources.Load<Text>("Message"), parentTransform);
+
+        talk.text = message;
+
+        Canvas.ForceUpdateCanvases();
+
+        scrollRect.verticalNormalizedPosition = 0.0f;
+    }
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        string message = $"<color=green>{newPlayer.NickName} Joined the Game.</color>";
+
+        photonView.RPC("Send", RpcTarget.All, message);
+    }
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        string message = $"<color=green>{otherPlayer.NickName} Left the Game.</color>";
+
+        photonView.RPC("Send", RpcTarget.All, message);
     }
 }
