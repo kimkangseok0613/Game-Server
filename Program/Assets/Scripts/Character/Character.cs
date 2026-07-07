@@ -25,11 +25,11 @@ public class Character : MonoBehaviourPun
     {
         if (photonView.IsMine)
         {
-            Control();
+           Control();
 
-            Animate();
+           Animate();
 
-            Pause();
+           Pause();
         }
     }
 
@@ -42,15 +42,17 @@ public class Character : MonoBehaviourPun
             rotation.RotateY(rigidBody);
         }
     }
+
     void Pause()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if(Input.GetKeyDown(KeyCode.Escape))
         {
             MouseManager.Instance.SetMouse(true);
 
             PanelManager.Instance.Open(Panel.Pause);
         }
     }
+
     void Control()
     {
         direction.x = Input.GetAxisRaw("Horizontal");
@@ -67,7 +69,7 @@ public class Character : MonoBehaviourPun
 
     void Move()
     {
-        rigidBody.MovePosition(rigidBody.position + rigidBody.transform.TransformDirection(direction) * speed * Time.fixedDeltaTime);
+        rigidBody.linearVelocity = rigidBody.transform.TransformDirection(direction).normalized * speed;
     }
 
     private void DisableCamera()
@@ -86,4 +88,11 @@ public class Character : MonoBehaviourPun
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("Robot"))
+        {
+            PhotonNetwork.Destroy(other.gameObject);
+        }
+    }
 }
