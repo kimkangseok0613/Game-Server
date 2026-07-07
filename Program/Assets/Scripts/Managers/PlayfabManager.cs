@@ -14,7 +14,7 @@ public class PlayfabManager : MonoBehaviourPunCallbacks
 
     public void Request()
     {
-        PlayFabSettings.staticSettings.TitleId = "8AED9";
+        PlayFabSettings.staticSettings.TitleId = "1C4BF2";
 
         var request = new LoginWithEmailAddressRequest 
         {

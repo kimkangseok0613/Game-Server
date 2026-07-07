@@ -6,6 +6,7 @@ using UnityEngine;
 public class MasterManager : MonoBehaviourPunCallbacks
 {
     [SerializeField] Transform createTransform;
+    [SerializeField] GameObject clone;
 
     private IEnumerator Start()
     {
@@ -13,10 +14,15 @@ public class MasterManager : MonoBehaviourPunCallbacks
         {
             while (true)
             {
-                GameObject clone = PhotonNetwork.InstantiateRoomObject("Robot", Vector3.zero, Quaternion.identity);
+                if (PhotonNetwork.CurrentRoom != null)
+                {
+                    if (clone == null)
+                    {
+                        clone = PhotonNetwork.InstantiateRoomObject("Robot", Vector3.zero, Quaternion.identity);
 
-                clone.transform.position = createTransform.position;
-
+                        clone.transform.position = createTransform.position;
+                    }
+                }
                 yield return new WaitForSeconds(5.0f);
             }
         }
@@ -24,8 +30,6 @@ public class MasterManager : MonoBehaviourPunCallbacks
 
     public override void OnMasterClientSwitched(Player newMasterClient)
     {
-        Debug.Log(PhotonNetwork.PlayerList[0].NickName);
-
         PhotonNetwork.SetMasterClient(PhotonNetwork.PlayerList[0]);
     }
 }

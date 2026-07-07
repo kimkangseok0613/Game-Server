@@ -1,9 +1,11 @@
 using UnityEngine;
 using Photon.Pun;
+using UnityEngine.tvOS;
 
-public class Character : MonoBehaviourPun
+public class Character : MonoBehaviourPun, IPunObservable
 {
     [SerializeField] float speed;
+    [SerializeField] float health = 100;
     [SerializeField] Vector3 direction;
     [SerializeField] Rotation rotation;
     [SerializeField] Animator animator;
@@ -55,6 +57,8 @@ public class Character : MonoBehaviourPun
 
     void Control()
     {
+        rotation.MouseX = Input.GetAxisRaw("Mouse X");
+
         direction.x = Input.GetAxisRaw("Horizontal");
         direction.z = Input.GetAxisRaw("Vertical");
 
@@ -92,7 +96,30 @@ public class Character : MonoBehaviourPun
     {
         if(other.CompareTag("Robot"))
         {
-            PhotonNetwork.Destroy(other.gameObject);
+            PhotonView View = other.GetComponent<PhotonView>();
+
+            if (View != null)
+            {
+                Debug.Log("Robot Object does not have PhotonView");
+            }
+            if(View.IsMine || PhotonNetwork.IsMasterClient)
+            {
+                PhotonNetwork.Destroy(View.gameObject);
+            }
+        }
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            // 내 오브젝트라면 다른 클라이언트에게 데이터를 전송합니다.
+            stream.SendNext(health);
+        }
+        else
+        {
+            // 다른 클라이언트의 데이터를 받습니다.
+            health = (float)stream.ReceiveNext();
         }
     }
 }
